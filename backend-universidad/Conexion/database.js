@@ -3,7 +3,7 @@ const {Sequelize}=require('sequelize')
 const sequelize= new Sequelize(
     'universidad',
     'root',
-    'admin123',
+    'root',
     {
         host:'localhost',
         port:3306,
