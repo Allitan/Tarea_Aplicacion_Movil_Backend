@@ -1,14 +1,17 @@
 import { View, Text, TextInput, Button, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Alumno } from '../Modelos/Alumno'
+import { useContextAlumno } from '../Provider/ProviderAlumno'
 
 export default function AgregarAlumnos() {
+
+    const {agregarAlumno} = useContextAlumno();
 
     const [nombreAlumno, setNombreAlumno] = useState('')
     const [emailAlumno, setEmailAlumno] = useState('')
     const [cantidadClase, setCantidadClase] = useState('')
 
-    async function agregarAlumno(){
+    function agregar(){
 
         let alumno:Alumno={
             idAlumno:0,
@@ -17,22 +20,7 @@ export default function AgregarAlumnos() {
             cantidadClases:parseInt(cantidadClase)
         }
 
-        const respuesta= await fetch('http://192.168.0.7:5000/alumno', {
-            method: 'Post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(alumno)
-        });
-
-        const respuestaApi= await respuesta.json()
-
-        if(respuestaApi){
-            Alert.alert("ALumno agregado")
-        }
-        else{
-            Alert.alert('Ocurrio un error')
-        }
+        agregarAlumno(alumno);
     }
 
     return (
@@ -54,7 +42,7 @@ export default function AgregarAlumnos() {
                 onChangeText={setCantidadClase}
             ></TextInput>
 
-            <Button title='Agregar Alumno' onPress={agregarAlumno}></Button>
+            <Button title='Agregar Alumno' onPress={agregar}></Button>
         </View>
     )
 }
